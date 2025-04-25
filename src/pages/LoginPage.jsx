@@ -36,9 +36,7 @@ export default function LoginPage() {
                 setMessage('Đăng nhập thành công!');
                 setShowMessage(true);
                 
-                setTimeout(() => {
-                    navigate('/admin-product-management'); 
-                }, 1500);
+                navigate('/admin-product-management'); 
             } else {
                 setMessageType('danger');
                 setMessage(result.message);

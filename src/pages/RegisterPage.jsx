@@ -13,12 +13,12 @@ export default function RegisterPage() {
         password: '',
         confirmPassword: ''
     });
-    
+
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState(''); 
+    const [message, setMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
     const [messageType, setMessageType] = useState('danger');
-    
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,7 +39,7 @@ export default function RegisterPage() {
             return false;
         }
     };
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
@@ -47,55 +47,53 @@ export default function RegisterPage() {
             [name]: value
         }));
     };
-    
+
     const validateForm = () => {
-        
+
         if (!formData.email.trim()) {
             setMessage('Vui lòng nhập email');
             return false;
         }
-        
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
             setMessage('Email không hợp lệ');
             return false;
         }
-        
+
         if (formData.password.length < 6) {
             setMessage('Mật khẩu phải có ít nhất 6 ký tự');
             return false;
         }
-        
+
         if (formData.password !== formData.confirmPassword) {
             setMessage('Mật khẩu và xác nhận mật khẩu không khớp');
             return false;
         }
-        
+
         return true;
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             setMessageType('danger');
             setShowMessage(true);
             return;
         }
-        
+
         setLoading(true);
-        
+
         try {
             const result = await registerMyUserApi(formData);
-            
+
             if (result.success) {
                 setMessageType('success');
                 setMessage('Đăng ký thành công! Đang chuyển hướng...');
                 setShowMessage(true);
-                
-                setTimeout(() => {
-                    navigate('/admin-product-management'); 
-                }, 2000);
+
+                navigate('/admin-product-management');
             } else {
                 setMessageType('danger');
                 setMessage(result.message);
@@ -109,19 +107,19 @@ export default function RegisterPage() {
             setLoading(false);
         }
     };
-    
+
     return (
         <Container className="tw-flex tw-items-center tw-justify-center tw-min-h-screen">
             <Card className="tw-p-4 tw-shadow tw-rounded tw-max-w-[500px] tw-w-full">
                 <Card.Body>
                     <Card.Title className="tw-text-center tw-mb-4 tw-text-xl">Đăng ký tài khoản</Card.Title>
-                    
+
                     {showMessage && (
                         <Alert variant={messageType} onClose={() => setShowMessage(false)} dismissible>
                             {message}
                         </Alert>
                     )}
-                    
+
                     <Form onSubmit={handleSubmit}>
 
                         <Form.Group className="tw-mb-3" controlId="formEmail">
@@ -150,7 +148,7 @@ export default function RegisterPage() {
                                 className="tw-border tw-border-gray-300 tw-p-2"
                             />
                         </Form.Group>
-                        
+
                         <Form.Group className="tw-mb-4" controlId="formConfirmPassword">
                             <Form.Label>Xác nhận mật khẩu</Form.Label>
                             <Form.Control
@@ -164,15 +162,15 @@ export default function RegisterPage() {
                             />
                         </Form.Group>
 
-                        <Button 
-                            variant="primary" 
-                            type="submit" 
+                        <Button
+                            variant="primary"
+                            type="submit"
                             className="tw-bg-blue-600 tw-text-white tw-w-full tw-mb-3"
                             disabled={loading}
                         >
                             {loading ? 'Đang xử lý...' : 'Đăng ký'}
                         </Button>
-                        
+
                         <div className="tw-text-center tw-mt-2">
                             Đã có tài khoản?{' '}
                             <Link to="/login-form" className="tw-text-blue-600 tw-font-medium">

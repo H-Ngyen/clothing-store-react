@@ -5,7 +5,7 @@ export async function createMyProductApi(formData) {
         const response = await fetch(`${API_BASE_URL}/api/my/product`, {
             method: "POST",
             body: formData
-        });
+        });        
 
         if (!response.ok) throw new Error("Failed to create product!");
         return response.json();

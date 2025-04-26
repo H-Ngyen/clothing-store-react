@@ -29,8 +29,7 @@ export default function CollectionPage() {
   const filteredProducts = products
     .filter((product) => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = filterCategory === '' || product.category === filterCategory;
-      return matchesSearch && matchesCategory;
+      return matchesSearch;
     })
     .sort((a, b) => {
       if (sortBy === 'name') {

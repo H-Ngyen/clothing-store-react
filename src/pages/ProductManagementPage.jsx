@@ -91,10 +91,8 @@ export default function ProductManagementPage() {
     };
 
     const filteredProducts = products.filter(product => {
-        const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            product.description.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = filterCategory === '' || product.category === filterCategory;
-        return matchesSearch && matchesCategory;
+        const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesSearch;
     });
 
     return (
